@@ -1,0 +1,8 @@
+node_modules/
+dist/
+# Raw wiki downloads: curated by hand, never shipped. Run `npm run promote` instead.
+raw/
+# Local editor/assistant settings
+.claude/
+*.log
+.DS_Store

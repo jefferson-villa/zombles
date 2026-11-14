@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0d0f0d" />
+    <meta name="description" content="Guess the Black Ops Zombies map from a zoomed-in screenshot. Five guesses. New puzzle daily." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧟</text></svg>" />
+    <title>Zombles</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <button class="icon-btn" id="help-btn" aria-label="How to play">?</button>
+      <h1 class="logo">ZOMB<span>LES</span></h1>
+      <button class="icon-btn" id="stats-btn" aria-label="Statistics">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4 20V10h3v10H4zm6.5 0V4h3v16h-3zM17 20v-7h3v7h-3z"/></svg>
+      </button>
+    </header>
+
+    <nav class="modes" role="tablist" aria-label="Game mode">
+      <button role="tab" id="tab-daily" data-mode="daily" aria-selected="true">Daily <span id="daily-num"></span></button>
+      <button role="tab" id="tab-endless" data-mode="endless" aria-selected="false">Endless</button>
+    </nav>
+
+    <main class="game">
+      <div id="placeholder-banner" class="banner" hidden>
+        Placeholder images. Run <code>npm run fetch</code>, curate <code>raw/</code>, then <code>npm run promote</code>.
+      </div>
+
+      <div class="frame-wrap">
+        <div class="frame" id="frame">
+          <span class="zoom-badge" id="zoom-badge" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="chips">
+        <span class="chip" id="hint-chip" hidden></span>
+      </div>
+
+      <ol class="guesses" id="guesses" aria-label="Your guesses"></ol>
+
+      <div class="picker" id="picker">
+        <div class="picker-field">
+          <input
+            type="text"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="picker-list"
+            aria-label="Guess the map"
+            placeholder="Search maps…"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <ul id="picker-list" role="listbox" aria-label="Maps" hidden></ul>
+        </div>
+        <button type="button" class="btn primary">Guess</button>
+      </div>
+
+      <section class="result" id="result" hidden aria-live="polite">
+        <p class="result-head" id="result-head"></p>
+        <h2 class="result-map" id="result-map"></h2>
+        <p class="result-game" id="result-game"></p>
+        <div class="result-actions">
+          <button class="btn primary" id="share-btn">Share</button>
+          <button class="btn" id="next-btn" hidden>Next map</button>
+          <button class="btn" id="result-stats-btn">Stats</button>
+        </div>
+        <p class="countdown" id="countdown-wrap" hidden>Next daily in <strong id="countdown">--:--:--</strong></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Images sourced from the <a href="https://callofduty.fandom.com/" target="_blank" rel="noopener">Call of Duty Wiki</a>.
+      Call of Duty © Activision. Fan project, not affiliated.
+    </footer>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+
+    <dialog id="help-dialog" class="modal">
+      <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+      <h2>How to play</h2>
+      <p>Name the <strong>Black Ops</strong> or <strong>Black Ops II</strong> Zombies map in <strong id="help-guesses">5</strong> guesses.</p>
+      <ul>
+        <li>You start zoomed way in. Each wrong guess zooms out.</li>
+        <li>Pick a map from the list. Nicknames like <em>Green Run</em> or <em>Alcatraz</em> work too.</li>
+        <li>After <strong id="help-hint">2</strong> wrong guesses you get told which game it's from.</li>
+        <li><strong>Daily</strong> is the same puzzle for everyone and resets at local midnight. <strong>Endless</strong> keeps going.</li>
+      </ul>
+      <p class="muted">🧟 wrong guess · 🟩 correct · 🟥 out of guesses</p>
+    </dialog>
+
+    <dialog id="stats-dialog" class="modal">
+      <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+      <h2 id="stats-title">Statistics</h2>
+      <div class="stat-row" id="stat-row"></div>
+      <h3>Guess distribution</h3>
+      <div class="dist" id="dist"></div>
+    </dialog>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
